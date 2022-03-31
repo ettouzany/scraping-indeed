@@ -34,7 +34,11 @@ def get_description(description):
     description2 = description.find('div')
     if (description2 is not None):
         description = description2
+    if (description.get_text() == ''):
+        description = description.find_next('div')
     ps = description.find_all('p')
+    if (len(ps) == 0):
+        ps = description.find_all('div')
     li = description.find_all('li')
     if (ps is not None):
         ps = [p.get_text() for p in ps]
@@ -86,11 +90,13 @@ def main(city, job):
     id = 1
     for link in links:
         div = get_url_data(link)
+        with open(f"{city}_{job}_{id}.html", "w") as f:
+            f.write(div.prettify())
         metadata = div.find('div', attrs={'class': metadata_class})
         description = div.find('div', attrs={'id': description_id})
         offers[id] = get_info_from_div(description, metadata)
         id += 1
-    with open ('offers.json', 'w') as f:
+    with open (f'{city}_{job}_offers.json', 'w') as f:
         json.dump(offers, f)
 
 
