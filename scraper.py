@@ -5,10 +5,17 @@ import json
 
 def get_metadata(metadata):
     divs = metadata.find_all('div')
-    if len(divs) == 3:
+    if len(divs) >= 3:
         one = divs[0].get_text()
         two = divs[1].get_text()
-        three = divs[2].find('a')['href']
+        three = divs[2].find('a')
+        if (three is not None):
+            try:
+                three = three['href']
+            except:
+                three = three.get_text()
+        else:
+            three = ''
     elif len(divs) == 2:
         one = divs[0].get_text()
         two = divs[1].get_text()
