@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import json
-
+import numpy as np
 
 def get_metadata(metadata):
     divs = metadata.find_all('div')
@@ -101,4 +101,6 @@ def main(city, job):
 
 
 if __name__ == '__main__':
-    main('Casablanca', 'python')
+    # main('Casablanca', 'decathlon') 
+    m = [[i for i in range(10)] for _ in (range(10))]
+    print(np.array(m))
